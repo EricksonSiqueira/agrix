@@ -39,4 +39,19 @@ public class TokenService {
         .toInstant(ZoneOffset.of("-03:00"));
   }
 
+  /**
+   * Validate token string.
+   *
+   * @param token the token
+   * @return the string
+   */
+  public String validateToken(String token) {
+    Algorithm algorithm = Algorithm.HMAC256(secret);
+    return JWT.require(algorithm)
+        .withIssuer("trybetrack")
+        .build()
+        .verify(token)
+        .getSubject();
+  }
+
 }
